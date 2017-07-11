@@ -7,7 +7,7 @@ use App\Helpers\Helper;
 
 class Rules
 {
-    use fillers, tableAuth, tableActions, flowControl, actions, mathLib, stringLib, dateLib, generators, mutateResponse, getResponse;
+    use fillers, tableAuth, tableActions, flowControl, actions, mathLib, stringLib, dateLib, generators, mutateResponse, getResponse, collectionLib;
 
     private $assertion = [
         'elseWhenever' => false,
@@ -31,8 +31,8 @@ class Rules
     private $isCurrentDBAction = false;
     private $actionType = '';
     private $tableName = '';
-    private $selectedService = null;
-    private $selectedMethod = null;
+    private $selectedService;
+    private $selectedMethod;
     private $methodAction = [
         'GET' => 'query',
         'POST' => 'create',
@@ -99,6 +99,12 @@ class Rules
     public function useArgsOrPrevOutput($args)
     {
         return ($args == null)? $this->results : $args;
+    }
+
+    public function destroyVariable(&$input_var)
+    {
+        unset($input_var);
+        return $this;
     }
     
 }
