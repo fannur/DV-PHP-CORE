@@ -195,8 +195,17 @@ class devless
 
         if($queryParams) {
             foreach($queryParams as $eachParamName => $eachParamArgs) {
-                // dd($eachParamArgs);
-                $queryBuilder->paramsBuilder($eachParamName, $eachParamArgs[0]);
+                
+                if(is_array($eachParamArgs)){
+                    foreach($eachParamArgs as $innerParams) {
+                          $queryBuilder->paramsBuilder($eachParamName, $innerParams);  
+                    }
+                        
+                    
+                } else {
+                    $queryBuilder->paramsBuilder($eachParamName, $eachParamArgs[0]);
+                }
+                
             }    
         }
         
