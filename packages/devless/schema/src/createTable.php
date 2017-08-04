@@ -41,7 +41,7 @@ trait createTable
                     //default field
                     $table->increments('id');
                     $table->integer('devless_user_id');
-
+                    
                     //generate remaining fields
                     $count = 0;
                     foreach ($new_payload['field'] as $field) {
