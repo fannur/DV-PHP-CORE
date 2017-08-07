@@ -354,7 +354,8 @@ scriptEngine.get = function() {
 scriptEngine.all = function(service, table) {
     var reference = devless_main.singleCourier;
     SDK.queryData(service, table, SDK.queryParams, function(response) {
-        if (response.payload.results) {
+        if (response.payload) {
+        	if(!response.payload.results){return false;}
             response = response.payload.results;
             mutatedResponse = dvInterceptQueryResponse(response);
             devless_main.coreLib.render(reference, mutatedResponse, service, table);
@@ -435,7 +436,7 @@ scriptEngine.oneof = function(service, table) {
             devless_main.coreLib.notify(response.message, 0);
             devless_main.doneProcessing();
             callback()
-            devless_main.init();
+            // devless_main.init();
         });
     }
     devless_main.coreLib.form(devless_main.singleCourier, update);
@@ -451,7 +452,7 @@ scriptEngine.where = function(key, value) {
         return this;
     },
     scriptEngine.param = function(key, value) {
-        SDK.queryParams[key] = value;
+    	SDK.queryParams[key] = value;
         return this;
     },
     scriptEngine.signup = function() {
@@ -602,7 +603,10 @@ devlessCallbacks = function(callback) {
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var respObj = JSON.parse(xhr.responseText);
-                callback(respObj);
+                console.log(respObj);   
+                if(respObj.status_code && respObj.message){
+                	callback(respObj);	
+                }
             }
         }
 
@@ -616,7 +620,6 @@ dvInterceptSubmission = function(formValues) {
 dvInterceptQueryResponse = function(response) {
     return response;
 }
-
 
 dvOnResponse = devlessCallbacks;
 
