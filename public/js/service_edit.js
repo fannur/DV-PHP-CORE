@@ -193,7 +193,7 @@
    }
    function set_script(){
        setTimeout(function(){ 
-          $('.code-box').ace({ theme: 'chrome', lang: 'php'});
+          $('.code-box').ace({ theme: 'github', lang: 'php'});
         // var editor = $('.code-box').data('ace');
         // var aceInstance = editor.editor.ace;
         // console.log(aceInstance);
